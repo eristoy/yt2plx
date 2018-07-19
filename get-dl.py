@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from __future__ import unicode_literals
-import youtube_dl,sys
+import youtube_dl,sys,os,shutil
 
 if len(sys.argv) == 1:
     print ('Usage: get-dl.py youtubeurl')
@@ -37,5 +37,24 @@ ydl_opts = {
 
 }
 
+workingDir ='/Users/eric/working'
+plxDir = '/Volumes/Media'
+os.chdir(workingDir)
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     ydl.download([yURL])
+
+mFile=''
+tFile=''
+dirList = os.listdir(workingDir)
+mySrc=''
+myDst=''
+for file in dirList:
+    if file.endswith('.mp3'):
+        #mFile=file
+        #mySrc = workingDir + "/" + mFile
+        #myDst = plxDir +"/" + mFile
+        shutil.move(file,plxDir)
+    if file.endswith('.jpg'):
+        tFile = file
+        os.remove(tFile)
+
