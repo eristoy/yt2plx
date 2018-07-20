@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from __future__ import unicode_literals
-import youtube_dl,sys,os,shutil
+import youtube_dl,sys,os,shutil,re
 
 if len(sys.argv) == 1:
     print ('Usage: get-dl.py youtubeurl')
@@ -23,6 +23,7 @@ def my_hook(d):
 
 ydl_opts = {
     'writethumbnail': True,
+    'restrictfilesnames': True,
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
@@ -31,6 +32,9 @@ ydl_opts = {
     }, {
         'key': 'EmbedThumbnail',
         'already_have_thumbnail': True
+    }, {
+        'key': 'MetadataFromTitle',
+        'format_to_regex': False
     }],
     'logger': MyLogger(),
     'progress_hooks': [my_hook],
